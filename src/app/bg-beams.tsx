@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { BackgroundBeams } from "./components/ui/background-beams";
+import { BackgroundBeams } from "../components/ui/background-beams";
 import { TypewriterEffectDemo } from "./typewritter";
 import { WavyBackgroundDemo } from "./bg-wavy";
 
