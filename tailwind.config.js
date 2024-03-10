@@ -14,6 +14,9 @@ module.exports = {
       height: {
         "6/5": "120vh",
       },
+      fontSize: {
+        "2xs": ["0.5rem", "1rem"],
+      },
     },
   },
   plugins: [
