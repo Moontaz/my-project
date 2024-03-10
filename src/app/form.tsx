@@ -11,7 +11,7 @@ export function SignupFormDemo() {
     console.log("Form submitted");
   };
   return (
-    <div className="max-w-sm w-full h-auto mx-auto my-10 rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black z-20">
+    <div className="max-w-sm h-[97vh] lg:h-[36rem] w-[90vw] lg:w-auto mx-auto my-10 rounded-md sm:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black z-20">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome to Aceternity
       </h2>
@@ -20,7 +20,7 @@ export function SignupFormDemo() {
         yet
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="mt-4 mb-0" onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="age">Your Age</Label>
@@ -47,7 +47,7 @@ export function SignupFormDemo() {
             type="text"
           />
         </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
+        <LabelInputContainer className="mb-2">
           <Label htmlFor="sccondition">Another condition</Label>
           <Input id="sccondition" placeholder="nothing" type="text" />
         </LabelInputContainer>
@@ -60,9 +60,9 @@ export function SignupFormDemo() {
           <BottomGradient />
         </button>
 
-        <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
+        <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-1 lg:my-4 h-[1px] w-full" />
 
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-2">
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
