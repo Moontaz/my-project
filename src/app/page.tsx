@@ -1,11 +1,6 @@
 import React from "react";
-import { TypewriterEffectDemo } from "./typewritter";
-import { BackgroundBeamsDemo } from "./bg-beams";
-import { SpotlightPreview } from "./bg-spotlight";
-import { WavyBackgroundDemo } from "./bg-wavy";
 import { BackgroundBoxesDemo } from "./bg-boxes";
 import { BackgroundGradientAnimationDemo } from "./bg-gradient";
-import { LampDemo } from "./lamp";
 
 function App() {
   return (
