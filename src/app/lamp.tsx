@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { LampContainer } from "./components/ui/lamp";
+import { LampContainer } from "../components/ui/lamp";
 import { BackgroundBoxesDemo } from "./bg-boxes";
 import { SignupFormDemo } from "./form";
 
