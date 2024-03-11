@@ -53,7 +53,7 @@ export const Tabs = ({
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
             className={cn(
-              "relative px-2 py-[0.1rem] lg:px-2 lg:py-2 lg:mx-4 rounded-full text-2xs lg:text-base",
+              "relative px-2 py-[0.1rem] lg:px-2 lg:py-2 lg:mx-4 rounded-full text-2xs lg:text-base ",
               tabClassName
             )}
             style={{
@@ -101,14 +101,14 @@ export const FadeInDiv = ({
     return tab.value === tabs[0].value;
   };
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full ">
       {tabs.map((tab, idx) => (
         <motion.div
           key={tab.value}
           layoutId={tab.value}
           style={{
             scale: 1 - idx * 0.1,
-            top: hovering ? idx * -50 : 0,
+            top: hovering ? idx * -40 : 0,
             zIndex: -idx,
             opacity: idx < 3 ? 1 - idx * 0.1 : 0,
           }}
@@ -116,7 +116,7 @@ export const FadeInDiv = ({
             y: isActive(tab) ? [0, 40, 0] : 0,
           }}
           className={cn(
-            "w-full h-[75vh] absolute top-0 left-0 flex justify-center",
+            "w-full h-[75vh] absolute top-0 left-0 flex justify-center ",
             className
           )}
         >

@@ -9,7 +9,7 @@ export function TabsDemo() {
       title: "Product",
       value: "product",
       content: (
-        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-violet-100 to-purple-50 shadow-2xl shadow-violet-300 ">
           <p>Product Tab</p>
           <DummyContent />
         </div>
@@ -19,7 +19,7 @@ export function TabsDemo() {
       title: "Services",
       value: "services",
       content: (
-        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-violet-100 to-purple-50 shadow-2xl shadow-violet-300">
           <p>Services tab</p>
           <DummyContent />
         </div>
@@ -29,7 +29,7 @@ export function TabsDemo() {
       title: "Playground",
       value: "playground",
       content: (
-        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-violet-100 to-purple-50 shadow-2xl shadow-violet-300">
           <p>Playground tab</p>
           <DummyContent />
         </div>
@@ -39,7 +39,7 @@ export function TabsDemo() {
       title: "Content",
       value: "content",
       content: (
-        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl  p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-violet-100 to-purple-50 shadow-2xl shadow-violet-300">
           <p>Content tab</p>
           <DummyContent />
         </div>
@@ -49,7 +49,7 @@ export function TabsDemo() {
       title: "Random",
       value: "random",
       content: (
-        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-[95vw] overflow-hidden relative h-full rounded-2xl lg:rounded-3xl p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-violet-100 to-purple-50 shadow-2xl shadow-violet-300">
           <p>Random tab</p>
           <DummyContent />
         </div>
@@ -58,7 +58,7 @@ export function TabsDemo() {
   ];
 
   return (
-    <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-center justify-start my-10">
+    <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-center justify-start my-10 ">
       <Tabs tabs={tabs} />
     </div>
   );

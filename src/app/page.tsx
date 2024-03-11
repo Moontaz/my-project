@@ -8,7 +8,7 @@ function App() {
     <main>
       <div className="grid grid-cols-1">
         <BackgroundGradientAnimationDemo />
-        <div className="bg-purple-50 h-screen w-screen">
+        <div className="bg-purple-50 h-screen w-screen ">
           <TabsDemo />
         </div>
         <BackgroundBoxesDemo />
