@@ -5,13 +5,13 @@ function simpleScript() {
     var umurHamilOrMenyusuiDiv = document.getElementById("umurHamilOrMenyusui");
 
     if (gender === "") {
-      document.getElementById("submitButton").classList.add("unvisible");
+      document.getElementById("submitButton").classList.add("hidden");
     } else if (gender === "laki-laki") {
-      document.getElementById("submitButton").classList.remove("unvisible");
+      document.getElementById("submitButton").classList.remove("hidden");
       hamilOrMenyusuiDiv.innerHTML = "";
       umurHamilOrMenyusuiDiv.innerHTML = "";
     } else if (gender === "perempuan") {
-      submitButton.classList.add("unvisible");
+      submitButton.classList.add("hidden");
       hamilOrMenyusuiDiv.innerHTML = `
         <label class="mt-3">Hamil atau Menyusui?</label>
         <select class="form-control mt-2" id="hamilMenyusui" name="hamilMenyusui" required>
@@ -35,9 +35,9 @@ function simpleScript() {
 
       if (hamilMenyusui === "tidak") {
         umurHamilOrMenyusuiDiv.innerHTML = "";
-        submitButton.classList.remove("unvisible");
+        submitButton.classList.remove("hidden");
       } else {
-        submitButton.classList.add("unvisible");
+        submitButton.classList.add("hidden");
         var umurText =
           hamilMenyusui === "hamil" ? "Umur Hamil" : "Umur Menyusui";
         document.getElementById("umurHamilOrMenyusui").innerHTML = `
@@ -49,7 +49,7 @@ function simpleScript() {
           var submitButton = document.getElementById("submitButton");
 
           if (umur && umur.value.trim() !== "") {
-            submitButton.classList.remove("unvisible");
+            submitButton.classList.remove("hidden");
           }
         });
       }
