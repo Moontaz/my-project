@@ -13,14 +13,14 @@ function simpleScript() {
     } else if (gender === "perempuan") {
       submitButton.classList.add("hidden");
       hamilOrMenyusuiDiv.innerHTML = `
-        <label class="mt-3">Hamil atau Menyusui?</label>
-        <select class="form-control mt-2" id="hamilMenyusui" name="hamilMenyusui" required>
-          <option value="">Pilih</option>
-          <option value="hamil">Hamil</option>
-          <option value="menyusui">Menyusui</option>
-          <option value="tidak">Tidak keduanya</option>
-        </select>
-      `;
+    <label class="mt-3">Hamil atau Menyusui?</label>
+    <select class="form-control mt-2" id="hamilMenyusui" name="hamilMenyusui" required>
+      <option value="">Pilih</option>
+      <option value="hamil">Hamil</option>
+      <option value="menyusui">Menyusui</option>
+      <option value="tidak">Tidak keduanya</option>
+    </select>
+  `;
     }
   });
 
@@ -41,9 +41,9 @@ function simpleScript() {
         var umurText =
           hamilMenyusui === "hamil" ? "Umur Hamil" : "Umur Menyusui";
         document.getElementById("umurHamilOrMenyusui").innerHTML = `
-        <label class="mt-3">${umurText}:</label>
-        <input type="number" class="form-control mt-1" id="umur" name="umur" required min="0">
-      `;
+    <label class="mt-3">${umurText}:</label>
+    <input type="number" class="form-control mt-1" id="umur" name="umur" required min="0">
+  `;
         document.getElementById("umur").addEventListener("input", function () {
           var umur = document.getElementById("umur");
           var submitButton = document.getElementById("submitButton");

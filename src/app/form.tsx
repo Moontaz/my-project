@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
+import { Select } from "../components/ui/select";
 import { cn } from "../utils/cn";
 import { IconBrandGithub } from "@tabler/icons-react";
 import simpleScript from "./script";
@@ -17,10 +18,10 @@ export function SignupFormDemo() {
   return (
     <div className="max-w-sm h-[97vh] lg:h-[36rem] w-[90vw] lg:w-auto mx-auto my-10 rounded-md sm:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black z-20 shadow-lg shadow-slate-300 hover:shadow-slate-400 lg:shadow-xl lg:shadow-slate-300">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome to Aceternity
+        Welcome to Takaran Gizi
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to aceternity if you can because we don&apos;t have a login flow
+        Login to Takaran Gizi if you can because we don&apos;t have a login flow
         yet
       </p>
 
@@ -45,7 +46,6 @@ export function SignupFormDemo() {
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="gender">Gender</Label>
-
           <select
             className="form-control mt-2"
             id="gender"
