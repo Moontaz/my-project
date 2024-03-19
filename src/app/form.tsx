@@ -33,29 +33,19 @@ export function SignupFormDemo() {
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="yearmonth">Year / Month</Label>
-            <select
-              className="form-control mt-2"
-              id="tahunOrBulan"
-              name="tahunOrBulan"
-              required
-            >
+            <Select className="" id="tahunOrBulan" name="tahunOrBulan" required>
               <option value="tahun">Tahun</option>
               <option value="bulan">Bulan</option>
-            </select>
+            </Select>
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="gender">Gender</Label>
-          <select
-            className="form-control mt-2"
-            id="gender"
-            name="gender"
-            required
-          >
+          <Select className="" id="gender" name="gender" required>
             <option value="">Pilih Gender</option>
             <option value="laki-laki">Laki-laki</option>
             <option value="perempuan">Perempuan</option>
-          </select>
+          </Select>
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <div className="form-group" id="hamilOrMenyusui"></div>

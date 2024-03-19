@@ -1,10 +1,12 @@
 import React from "react";
 import { MacbookScroll } from "../components/ui/macbook-scroll";
 import Link from "next/link";
+import { BackgroundBeams } from "../components/ui/background-beams";
 
 export function MacbookScrollDemo() {
   return (
-    <div className="overflow-hidden dark:bg-[#0B0B0F] bg-white w-full">
+    <div className="overflow-hidden dark:bg-[#0B0B0F] bg-[#0B0B0F] w-full">
+      <BackgroundBeams />
       <MacbookScroll
         title={
           <span>

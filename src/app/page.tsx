@@ -1,13 +1,14 @@
 import React from "react";
-import { BackgroundBoxesDemo } from "./bg-boxes";
 import { MacbookScrollDemo } from "./macbook";
+import { BackgroundBoxesDemo } from "./bg-boxes";
 
 function App() {
   return (
     <main>
       <div className="grid grid-cols-1">
-        <MacbookScrollDemo />
         {/* <BackgroundBoxesDemo /> */}
+        <MacbookScrollDemo />
+        {/* <BackgroundBeamsDemo /> */}
       </div>
     </main>
   );

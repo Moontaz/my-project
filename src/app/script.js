@@ -5,7 +5,7 @@ function simpleScript() {
     var umurHamilOrMenyusuiDiv = document.getElementById("umurHamilOrMenyusui");
 
     if (gender === "") {
-      document.getElementById("submitButton").classList.add("hidden");
+      document.getElementById("submitButton").classList.add("unvisible");
     } else if (gender === "laki-laki") {
       document.getElementById("submitButton").classList.remove("hidden");
       hamilOrMenyusuiDiv.innerHTML = "";
@@ -14,12 +14,12 @@ function simpleScript() {
       submitButton.classList.add("hidden");
       hamilOrMenyusuiDiv.innerHTML = `
     <label class="mt-3">Hamil atau Menyusui?</label>
-    <select class="form-control mt-2" id="hamilMenyusui" name="hamilMenyusui" required>
+    <Select class="" id="hamilMenyusui" name="hamilMenyusui" required>
       <option value="">Pilih</option>
       <option value="hamil">Hamil</option>
       <option value="menyusui">Menyusui</option>
       <option value="tidak">Tidak keduanya</option>
-    </select>
+    </Select>
   `;
     }
   });
