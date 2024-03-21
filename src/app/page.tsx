@@ -1,6 +1,5 @@
 import React from "react";
 import { MacbookScrollDemo } from "./macbook";
-import { BackgroundBoxesDemo } from "./bg-boxes";
 
 function App() {
   return (
