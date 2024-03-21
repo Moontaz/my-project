@@ -60,12 +60,12 @@ export const BackgroundBeams = React.memo(
     return (
       <div
         className={cn(
-          "absolute  h-[150vh] w-full inset-0  mt-[50vh] [mask-size:40px] [mask-repeat:no-repeat] flex items-center justify-center",
+          "fixed  h-full w-full inset-0  [mask-size:40px] [mask-repeat:no-repeat] flex items-center justify-center bg-[#fbfaf5]",
           className
         )}
       >
         <svg
-          className=" z-0 h-[250vh] w-full pointer-events-none absolute "
+          className=" z-0 h-full w-full pointer-events-none absolute "
           width="100%"
           height="100%"
           viewBox="0 0 696 316"
@@ -85,26 +85,28 @@ export const BackgroundBeams = React.memo(
               d={path}
               stroke={`url(#linearGradient-${index})`}
               strokeOpacity="0.4"
-              strokeWidth="0.5"
+              strokeWidth="1"
             ></motion.path>
           ))}
           <defs>
             {paths.map((path, index) => (
               <motion.linearGradient
                 id={`linearGradient-${index}`}
-                x1="100%"
-                x2="100%"
-                y1="100%"
-                y2="100%"
                 key={`gradient-${index}`}
+                initial={{
+                  x1: "0%",
+                  x2: "0%",
+                  y1: "0%",
+                  y2: "0%",
+                }}
                 animate={{
                   x1: ["0%", "100%"],
                   x2: ["0%", "95%"],
                   y1: ["0%", "100%"],
-                  y2: ["0%", `${93 + Math.random() * 10}%`],
+                  y2: ["0%", `${88 + Math.random() * 8}%`],
                 }}
                 transition={{
-                  duration: Math.random() * 10 + 10,
+                  duration: Math.random() * 1 + 10,
                   ease: "easeInOut",
                   repeat: Infinity,
                   delay: Math.random() * 10,
@@ -125,16 +127,8 @@ export const BackgroundBeams = React.memo(
               gradientUnits="userSpaceOnUse"
               gradientTransform="translate(352 34) rotate(90) scale(555 1560.62)"
             >
-              <stop
-                offset="0.0666667"
-                stopColor="var(--neutral-300)"
-                stopOpacity="0"
-              ></stop>
-              <stop
-                offset="0.243243"
-                stopColor="var(--neutral-300)"
-                stopOpacity="0"
-              ></stop>
+              <stop offset="0.0666667" stopColor="var(--neutral-300)"></stop>
+              <stop offset="0.243243" stopColor="var(--neutral-300)"></stop>
               <stop offset="0.43594" stopColor="white" stopOpacity="0"></stop>
             </radialGradient>
           </defs>

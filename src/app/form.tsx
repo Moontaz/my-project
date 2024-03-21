@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { Select } from "../components/ui/select";
+import { CascadingDropdowns } from "../components/ui/select-menu";
 import { cn } from "../utils/cn";
 import { IconBrandGithub } from "@tabler/icons-react";
 import simpleScript from "./script";
@@ -16,53 +17,36 @@ export function SignupFormDemo() {
     simpleScript();
   }, []);
   return (
-    <div className="max-w-sm h-[97vh] lg:h-[36rem] w-[90vw] lg:w-auto mx-auto my-10 rounded-md sm:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black z-20 shadow-lg shadow-slate-300 hover:shadow-slate-400 lg:shadow-xl lg:shadow-slate-300">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
+    <div className="max-w-md w-[40%] h-auto rounded-md p-1 md:p-3 shadow-input bg-white dark:bg-black z-20 shadow-lg shadow-slate-300 hover:shadow-slate-400 lg:shadow-xl lg:shadow-slate-300">
+      <h2 className="font-bold text-sm text-neutral-800 dark:text-neutral-200">
         Welcome to Takaran Gizi
       </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
+      <p className="text-neutral-600 text-[0.5rem] max-w-sm mt-1 dark:text-neutral-300">
         Login to Takaran Gizi if you can because we don&apos;t have a login flow
         yet
       </p>
 
-      <form className="mt-4 mb-0" onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+      <form className="mt-2 mb-0" onSubmit={handleSubmit}>
+        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 ">
           <LabelInputContainer>
-            <Label htmlFor="age">Your Age</Label>
+            <Label htmlFor="age" className="text-[0.6rem] mt-[5px] mb-[9px]">
+              Your Age
+            </Label>
             <Input id="age" placeholder="Here Buddy" type="text" />
           </LabelInputContainer>
-          <LabelInputContainer>
-            <Label htmlFor="yearmonth">Year / Month</Label>
-            <Select className="" id="tahunOrBulan" name="tahunOrBulan" required>
-              <option value="tahun">Tahun</option>
-              <option value="bulan">Bulan</option>
-            </Select>
-          </LabelInputContainer>
         </div>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="gender">Gender</Label>
-          <Select className="" id="gender" name="gender" required>
-            <option value="">Pilih Gender</option>
-            <option value="laki-laki">Laki-laki</option>
-            <option value="perempuan">Perempuan</option>
-          </Select>
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
-          <div className="form-group" id="hamilOrMenyusui"></div>
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-2">
-          <div className="form-group" id="umurHamilOrMenyusui"></div>
-        </LabelInputContainer>
+        <CascadingDropdowns />
 
         <button
-          className="bg-gradient-to-br relative group/btn from-gray-600 dark:from-zinc-900 dark:to-zinc-900 to-gray-800 dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+          className="ini-submit bg-gradient-to-br text-[0.6rem] h-5 w-full relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 
+          dark:bg-zinc-800  text-white rounded-md font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] 
+          dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
           id="submitButton"
         >
           Submit &rarr;
           <BottomGradient />
         </button>
-
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-1 lg:my-4 h-[1px] w-full" />
 
         <div className="flex flex-col space-y-2">
@@ -100,8 +84,6 @@ const LabelInputContainer = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
-      {children}
-    </div>
+    <div className={cn("flex flex-col w-full", className)}>{children}</div>
   );
 };

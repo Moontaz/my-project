@@ -23,9 +23,8 @@ import { IconWorld } from "@tabler/icons-react";
 import { IconCommand } from "@tabler/icons-react";
 import { IconCaretLeftFilled } from "@tabler/icons-react";
 import { IconCaretDownFilled } from "@tabler/icons-react";
+import { SignupFormDemo } from "../../app/form";
 import Image from "next/image";
-import { BackgroundBeams } from "./background-beams";
-import { BackgroundBoxesDemo } from "../../app/bg-boxes";
 
 export const MacbookScroll = ({
   src,
@@ -54,15 +53,15 @@ export const MacbookScroll = ({
 
   const scaleX = useTransform(
     scrollYProgress,
-    [0, 10],
-    [1.2, isMobile ? 9 : 16]
+    [0, 0.3],
+    [1.2, isMobile ? 0.9 : 1.6]
   );
   const scaleY = useTransform(
     scrollYProgress,
-    [0, 10],
-    [0.6, isMobile ? 9 : 16]
+    [0, 0.3],
+    [0.6, isMobile ? 0.9 : 1.6]
   );
-  const translate = useTransform(scrollYProgress, [0, 1], [0, 1200]);
+  const translate = useTransform(scrollYProgress, [0, 1], [0, 1025]);
   const rotate = useTransform(scrollYProgress, [0.1, 0.12, 0.3], [-28, -28, 0]);
   const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -70,7 +69,7 @@ export const MacbookScroll = ({
   return (
     <div
       ref={ref}
-      className="min-h-[250vh]  flex flex-col items-center py-0 md:py-80 justify-start flex-shrink-0 [perspective:800px] transform md:scale-100  scale-[0.35] sm:scale-50"
+      className="min-h-[250vh] flex flex-col items-center pt-[20rem]   justify-start flex-shrink-0 [perspective:800px] transform md:scale-[1.2]  scale-[0.35] sm:scale-50"
     >
       <motion.h2
         style={{
@@ -164,10 +163,13 @@ export const Lid = ({
           transformStyle: "preserve-3d",
           transformOrigin: "top",
         }}
-        className="h-96 w-[32rem] absolute inset-0 bg-[#010101] rounded-2xl p-2"
+        className="h-96 w-[32rem] absolute inset-0 bg-transparent rounded-2xl p-2"
       >
-        <div className="absolute inset-0 flex bg-[#272729] rounded-lg justify-center items-center" />
-        <BackgroundBoxesDemo />
+        <div className="absolute inset-0 bg-transparent rounded-lg" />
+        <div className="absolute inset-0 w-full h-[98%]  z-20 flex flex-row m-1">
+          <SignupFormDemo />
+          <div className="w-[55%] h-[full] ml-[1.1rem] rounded-md bg-red-900"></div>
+        </div>
       </motion.div>
     </div>
   );

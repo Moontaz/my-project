@@ -10,6 +10,8 @@
     "export": "next export"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@radix-ui/react-label": "^2.0.2",
     "@tabler/icons-react": "^2.47.0",
     "clsx": "^2.1.0",
