@@ -5,11 +5,24 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
+npm install -D tailwindcss postcss autoprefixer
+npm i framer-motion clsx tailwind-merge
+npm i @tabler/icons-react @headlessui/react @radix-ui/react-label @heroicons/react
+# or
+yarn install -D tailwindcss postcss autoprefixer
+yarn i framer-motion clsx tailwind-merge
+yarn i @tabler/icons-react @headlessui/react @radix-ui/react-label @heroicons/react
+# or
+bun install -D tailwindcss postcss autoprefixer
+bun i framer-motion clsx tailwind-merge
+bun i @tabler/icons-react @headlessui/react @radix-ui/react-label @heroicons/react
+```
+Then, run the development server:
+
+```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 # or
 bun dev
 ```
