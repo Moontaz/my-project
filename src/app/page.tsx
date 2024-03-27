@@ -4,7 +4,7 @@ import { MacbookScrollDemo } from "./macbook";
 function App() {
   return (
     <main>
-      <div className="h-[250vh]">
+      <div className="h-[270vh]">
         {/* <BackgroundBoxesDemo /> */}
         <MacbookScrollDemo />
         {/* <BackgroundBeamsDemo /> */}
