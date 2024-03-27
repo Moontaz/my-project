@@ -61,7 +61,7 @@ export const MacbookScroll = ({
     [0, 0.3],
     [0.6, isMobile ? 0.9 : 1.6]
   );
-  const translate = useTransform(scrollYProgress, [0, 1], [0, 1200]);
+  const translate = useTransform(scrollYProgress, [0, 1], [0, 1300]);
   const rotate = useTransform(scrollYProgress, [0.1, 0.12, 0.3], [-28, -28, 0]);
   const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
