@@ -5,7 +5,7 @@ import { BackgroundBeams } from "../components/ui/background-beams";
 
 export function MacbookScrollDemo() {
   return (
-    <div className="overflow-hidden dark:bg-[#0B0B0F] bg-[#ffffff] w-full">
+    <div className="overflow-hidden dark:bg-[#0B0B0F] bg-[#ffffff] w-full h-[270vh]">
       <BackgroundBeams />
       <MacbookScroll
         title={
