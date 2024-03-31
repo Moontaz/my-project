@@ -1,6 +1,10 @@
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { Label } from "./label";
+import { Input } from "./input";
+import { cn } from "../../utils/cn";
+import axios from "axios";
 
 interface Selection {
   id: number;
@@ -11,23 +15,15 @@ interface Option {
   name: string;
 }
 const CascadingDropdowns: React.FC = () => {
+  const [textInputValue, setTextInputValue] = useState("");
+  const [selectedYearmonth, setSelectedYearmonth] = useState<string>("");
   const [selectedOption1, setSelectedOption1] = useState<string>("");
   const [selectedOption2, setSelectedOption2] = useState<string>("");
   const [selectedOption3, setSelectedOption3] = useState<string>("");
 
-  const yearmonth: Selection[] = [
-    {
-      id: 1,
-      name: "Select",
-    },
-    {
-      id: 2,
-      name: "Year",
-    },
-    {
-      id: 3,
-      name: "Month",
-    },
+  const yearmonth: Option[] = [
+    { id: 2, name: "Year" },
+    { id: 3, name: "Month" },
   ];
   // Options for dropdown 1
   const options1: Option[] = [
@@ -60,6 +56,14 @@ const CascadingDropdowns: React.FC = () => {
   };
 
   // Handler for dropdown 1 change
+  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextInputValue(e.target.value);
+  };
+  // Handler for dropdown 1 change
+  const handleYearmonthChange = (value: string) => {
+    setSelectedYearmonth(value);
+  };
+  // Handler for dropdown 1 change
   const handleDropdown1Change = (value: string) => {
     setSelectedOption1(value);
     setSelectedOption2(""); // Reset dropdown 2 value
@@ -78,286 +82,413 @@ const CascadingDropdowns: React.FC = () => {
   };
 
   // Handler for form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (selectedOption1 === "Female" && !selectedOption2) {
+      alert("Please select and option for dropdown 2 before sbumitting.");
+      return;
+    }
+    axios
+      .post("APInya", {
+        inputText: textInputValue,
+        yearmonth,
+        selectedOption1,
+        selectedOption2,
+        selectedOption3,
+      })
+      .then((response) => {
+        console.log("Data submitted successfully:", response.data);
+        const [gizi1, gizi2, gizi3] = response.data;
 
-    // Handle form submission, you can access the selected values from selectedOption1, selectedOption2, and selectedOption3
-    console.log(
-      "Selected values:",
-      selectedOption1,
-      selectedOption2,
-      selectedOption3
-    );
+        setTextInputValue("");
+        setSelectedOption1("");
+        setSelectedOption2("");
+        setSelectedOption3("");
+      })
+      .catch((error) => {
+        console.error("Error Submitting data:", error);
+      });
   };
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="">
-        <Listbox value={selectedOption1} onChange={handleDropdown1Change}>
-          {({ open }) => (
-            <>
-              <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
-                Gender
-              </Listbox.Label>
-              <div className="relative  ">
-                <Listbox.Button className="relative w-full cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                  <span className="ml-3 block truncate text-[0.6rem]">
-                    {selectedOption1 || "Select"}
-                  </span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                    <ChevronUpDownIcon
-                      className="h-3 w-3 text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </Listbox.Button>
-
-                <Transition
-                  show={open}
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Listbox.Options className="absolute z-10  max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {options1.map((person) => (
-                      <Listbox.Option
-                        key={person.id}
-                        className={({ active }) =>
-                          classNames(
-                            active
-                              ? "bg-indigo-600 text-white text-[0.6rem]"
-                              : "text-gray-900",
-                            "relative cursor-default select-none  pl-3 pr-9"
-                          )
-                        }
-                        value={person.name}
-                      >
-                        {({ selected, active }) => (
-                          <>
-                            <div className="flex items-center  text-[0.6rem]">
-                              <span
-                                className={classNames(
-                                  selected ? "font-semibold" : "font-normal",
-                                  "ml-3 block truncate"
-                                )}
-                              >
-                                {person.name}
-                              </span>
-                            </div>
-
-                            {selected ? (
-                              <span
-                                className={classNames(
-                                  active ? "text-white" : "text-indigo-600",
-                                  "absolute inset-y-0 right-0 flex items-center pr-4"
-                                )}
-                              >
-                                <CheckIcon
-                                  className="h-3 w-3"
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Transition>
-              </div>
-            </>
-          )}
-        </Listbox>
-        <Listbox value={selectedOption2} onChange={handleDropdown2Change}>
-          {({ open }) => (
-            <>
-              <div
-                className="relative mt-[1px] "
-                hidden={!selectedOption1 || selectedOption1 === "Male"}
-              >
+    <div
+      className="max-w-md w-[45%] h-auto rounded-lg p-1 md:p-3  bg-white 
+    dark:bg-black z-20 shadow-xl shadow-blue-500   hover:shadow-blue-300"
+      // hidden={}
+    >
+      <h2 className="font-bold text-sm text-neutral-800 dark:text-neutral-200">
+        Welcome to Takaran Gizi
+      </h2>
+      <p className="text-neutral-600 text-[0.5rem] max-w-sm mt-1 dark:text-neutral-300">
+        Login to Takaran Gizi if you can because we don&apos;t have a login flow
+        yet
+      </p>
+      <form onSubmit={handleSubmit}>
+        <div className="">
+          <LabelInputContainer>
+            <Label htmlFor="age" className="text-[0.6rem] mt-[5px] mb-[9px]">
+              Your Age
+            </Label>
+            <Input
+              id="age"
+              placeholder="Your age broo!!"
+              type="text"
+              value={textInputValue}
+              onChange={(e) => setTextInputValue(e.target.value)}
+            />
+          </LabelInputContainer>
+          <Listbox value={selectedYearmonth} onChange={handleYearmonthChange}>
+            {({ open }) => (
+              <>
                 <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
-                  Condition
+                  Year/Month
                 </Listbox.Label>
-              </div>
-              <div
-                className="relative "
-                hidden={!selectedOption1 || selectedOption1 === "Male"}
-              >
-                <Listbox.Button className="relative w-full cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                  <span className="ml-3 block truncate text-[0.6rem]">
-                    {selectedOption2 || "Select"}
-                  </span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                    <ChevronUpDownIcon
-                      className="h-3 w-3 text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </Listbox.Button>
+                <div className="relative  ">
+                  <Listbox.Button className="relative w-full cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                    <span className="ml-3 block truncate text-[0.6rem]">
+                      {selectedYearmonth || "Year"}
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronUpDownIcon
+                        className="h-3 w-3 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
 
-                <Transition
-                  show={open}
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Listbox.Options className="absolute z-10 max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {options2[selectedOption1]?.map((person) => (
-                      <Listbox.Option
-                        key={person.id}
-                        className={({ active }) =>
-                          classNames(
-                            active
-                              ? "bg-indigo-600 text-white text-[0.6rem]"
-                              : "text-gray-900",
-                            "relative cursor-default select-none  pl-3 pr-9"
-                          )
-                        }
-                        value={person.name}
-                      >
-                        {({ selected, active }) => (
-                          <>
-                            <div className="flex items-center  text-[0.6rem]">
-                              <span
-                                className={classNames(
-                                  selected ? "font-semibold" : "font-normal",
-                                  "ml-3 block truncate"
-                                )}
-                              >
-                                {person.name}
-                              </span>
-                            </div>
+                  <Transition
+                    show={open}
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute z-10  max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {yearmonth.map((person) => (
+                        <Listbox.Option
+                          key={person.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "bg-indigo-600 text-white text-[0.6rem]"
+                                : "text-gray-900",
+                              "relative cursor-default select-none  pl-3 pr-9"
+                            )
+                          }
+                          value={person.name}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center  text-[0.6rem]">
+                                <span
+                                  className={classNames(
+                                    selected ? "font-semibold" : "font-normal",
+                                    "ml-3 block truncate"
+                                  )}
+                                >
+                                  {person.name}
+                                </span>
+                              </div>
 
-                            {selected ? (
-                              <span
-                                className={classNames(
-                                  active ? "text-white" : "text-indigo-600",
-                                  "absolute inset-y-0 right-0 flex items-center pr-4"
-                                )}
-                              >
-                                <CheckIcon
-                                  className="h-3 w-3"
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Transition>
-              </div>
-            </>
-          )}
-        </Listbox>
-        <Listbox value={selectedOption3} onChange={handleDropdown3Change}>
-          {({ open }) => (
-            <>
-              {" "}
-              <div
-                className="relative mt-[1px] "
-                hidden={
-                  !selectedOption2 || selectedOption2 === "Tidak Keduanya"
-                }
-              >
+                              {selected ? (
+                                <span
+                                  className={classNames(
+                                    active ? "text-white" : "text-indigo-600",
+                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-3 w-3"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </>
+            )}
+          </Listbox>
+          <Listbox value={selectedOption1} onChange={handleDropdown1Change}>
+            {({ open }) => (
+              <>
                 <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
-                  Aditional Information
+                  Gender
                 </Listbox.Label>
-              </div>
-              <div
-                className="relative mt-[1px] "
-                hidden={
-                  !selectedOption2 || selectedOption2 === "Tidak Keduanya"
-                }
-              >
-                <Listbox.Button className="relative w-full  cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                  <span className="ml-3 block truncate text-[0.6rem]">
-                    {selectedOption3 || "Select"}
-                  </span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                    <ChevronUpDownIcon
-                      className="h-3 w-3 text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </Listbox.Button>
+                <div className="relative  ">
+                  <Listbox.Button className="relative w-full cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                    <span className="ml-3 block truncate text-[0.6rem]">
+                      {selectedOption1 || "Select"}
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronUpDownIcon
+                        className="h-3 w-3 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
 
-                <Transition
-                  show={open}
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
+                  <Transition
+                    show={open}
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute z-10  max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {options1.map((person) => (
+                        <Listbox.Option
+                          key={person.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "bg-indigo-600 text-white text-[0.6rem]"
+                                : "text-gray-900",
+                              "relative cursor-default select-none  pl-3 pr-9"
+                            )
+                          }
+                          value={person.name}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center  text-[0.6rem]">
+                                <span
+                                  className={classNames(
+                                    selected ? "font-semibold" : "font-normal",
+                                    "ml-3 block truncate"
+                                  )}
+                                >
+                                  {person.name}
+                                </span>
+                              </div>
+
+                              {selected ? (
+                                <span
+                                  className={classNames(
+                                    active ? "text-white" : "text-indigo-600",
+                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-3 w-3"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </>
+            )}
+          </Listbox>
+          <Listbox value={selectedOption2} onChange={handleDropdown2Change}>
+            {({ open }) => (
+              <>
+                <div
+                  className="relative mt-[1px] cols-5 "
+                  hidden={!selectedOption1 || selectedOption1 === "Male"}
                 >
-                  <Listbox.Options className="absolute z-10 mt-1 max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {options3[selectedOption2]?.map((person) => (
-                      <Listbox.Option
-                        key={person.id}
-                        className={({ active }) =>
-                          classNames(
-                            active
-                              ? "bg-indigo-600 text-white text-[0.6rem]"
-                              : "text-gray-900",
-                            "relative cursor-default select-none  pl-3 pr-9"
-                          )
-                        }
-                        value={person.name}
-                      >
-                        {({ selected, active }) => (
-                          <>
-                            <div className="flex items-center  text-[0.6rem]">
-                              <span
-                                className={classNames(
-                                  selected ? "font-semibold" : "font-normal",
-                                  "ml-3 block truncate"
-                                )}
-                              >
-                                {person.name}
-                              </span>
-                            </div>
+                  <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
+                    Condition
+                  </Listbox.Label>
+                </div>
+                <div
+                  className="relative "
+                  hidden={!selectedOption1 || selectedOption1 === "Male"}
+                >
+                  <Listbox.Button className="relative cols-7 w-full cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                    <span className="ml-3 block truncate text-[0.6rem]">
+                      {selectedOption2 || "Select"}
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronUpDownIcon
+                        className="h-3 w-3 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
 
-                            {selected ? (
-                              <span
-                                className={classNames(
-                                  active ? "text-white" : "text-indigo-600",
-                                  "absolute inset-y-0 right-0 flex items-center pr-4"
-                                )}
-                              >
-                                <CheckIcon
-                                  className="h-3 w-3"
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Transition>
-              </div>
-            </>
-          )}
-        </Listbox>
-        <br />
-      </div>
-      <button
-        className="ini-submit bg-gradient-to-br text-[0.6rem] h-6 w-full relative group/btn from-blue-700 dark:from-zinc-900 dark:to-zinc-900 to-blue-500 
+                  <Transition
+                    show={open}
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute z-10 max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {options2[selectedOption1]?.map((person) => (
+                        <Listbox.Option
+                          key={person.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "bg-indigo-600 text-white text-[0.6rem]"
+                                : "text-gray-900",
+                              "relative cursor-default select-none  pl-3 pr-9"
+                            )
+                          }
+                          value={person.name}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center  text-[0.6rem]">
+                                <span
+                                  className={classNames(
+                                    selected ? "font-semibold" : "font-normal",
+                                    "ml-3 block truncate"
+                                  )}
+                                >
+                                  {person.name}
+                                </span>
+                              </div>
+
+                              {selected ? (
+                                <span
+                                  className={classNames(
+                                    active ? "text-white" : "text-indigo-600",
+                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-3 w-3"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </>
+            )}
+          </Listbox>
+          <Listbox value={selectedOption3} onChange={handleDropdown3Change}>
+            {({ open }) => (
+              <>
+                {" "}
+                <div
+                  className="relative mt-[1px] "
+                  hidden={
+                    !selectedOption2 || selectedOption2 === "Tidak Keduanya"
+                  }
+                >
+                  <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
+                    Aditional Information
+                  </Listbox.Label>
+                </div>
+                <div
+                  className="relative mt-[1px] "
+                  hidden={
+                    !selectedOption2 || selectedOption2 === "Tidak Keduanya"
+                  }
+                >
+                  <Listbox.Button className="relative w-full  cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                    <span className="ml-3 block truncate text-[0.6rem]">
+                      {selectedOption3 || "Select"}
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronUpDownIcon
+                        className="h-3 w-3 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+
+                  <Transition
+                    show={open}
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute z-10 mt-1 max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {options3[selectedOption2]?.map((person) => (
+                        <Listbox.Option
+                          key={person.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "bg-indigo-600 text-white text-[0.6rem]"
+                                : "text-gray-900",
+                              "relative cursor-default select-none  pl-3 pr-9"
+                            )
+                          }
+                          value={person.name}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center  text-[0.6rem]">
+                                <span
+                                  className={classNames(
+                                    selected ? "font-semibold" : "font-normal",
+                                    "ml-3 block truncate"
+                                  )}
+                                >
+                                  {person.name}
+                                </span>
+                              </div>
+
+                              {selected ? (
+                                <span
+                                  className={classNames(
+                                    active ? "text-white" : "text-indigo-600",
+                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-3 w-3"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </>
+            )}
+          </Listbox>
+        </div>
+        <button
+          className="ini-submit mt-4 bg-gradient-to-br text-[0.6rem] h-6 w-full relative group/btn from-blue-700 dark:from-zinc-900 dark:to-zinc-900 to-blue-500 
           dark:bg-zinc-800  text-white rounded-md font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] 
           dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-        type="submit"
-        id="submitButton"
-      >
-        Submit &rarr;
-        <BottomGradient />
-      </button>
-    </form>
+          type="submit"
+          id="submitButton"
+          hidden={
+            !selectedOption1 ||
+            (selectedOption1 === "Female" &&
+              !selectedOption2 &&
+              !selectedOption3) ||
+            (selectedOption1 === "Female" &&
+              selectedOption2 === "Hamil" &&
+              !selectedOption3) ||
+            (selectedOption1 === "Female" &&
+              selectedOption2 === "Menyusui" &&
+              !selectedOption3)
+          }
+        >
+          Submit &rarr;
+          <BottomGradient />
+        </button>
+      </form>
+    </div>
   );
 };
 
@@ -370,4 +501,17 @@ const BottomGradient = () => {
     </>
   );
 };
+
+const LabelInputContainer = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <div className={cn("flex flex-col w-full", className)}>{children}</div>
+  );
+};
+
 export { CascadingDropdowns };

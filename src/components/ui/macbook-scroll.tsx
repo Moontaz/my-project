@@ -25,6 +25,7 @@ import { IconCaretLeftFilled } from "@tabler/icons-react";
 import { IconCaretDownFilled } from "@tabler/icons-react";
 import { SignupFormDemo } from "../../app/form";
 import Image from "next/image";
+import { CascadingDropdowns } from "./select-menu";
 
 export const MacbookScroll = ({
   src,
@@ -61,7 +62,7 @@ export const MacbookScroll = ({
     [0, 0.3],
     [0.6, isMobile ? 0.9 : 1.6]
   );
-  const translate = useTransform(scrollYProgress, [0, 1], [0, 1300]);
+  const translate = useTransform(scrollYProgress, [0, 30], [0, 1200]);
   const rotate = useTransform(scrollYProgress, [0.1, 0.12, 0.3], [-28, -28, 0]);
   const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -69,7 +70,7 @@ export const MacbookScroll = ({
   return (
     <div
       ref={ref}
-      className="h-[250vh] absolute w-[100vw] flex flex-col items-center pt-[40vh]
+      className="h-[150vh] absolute w-[100vw] flex flex-col items-center pt-[40vh]
       justify-start flex-shrink-0 [perspective:800px] transform scale-100"
     >
       <motion.h2
@@ -167,9 +168,8 @@ export const Lid = ({
         className="h-96 w-[32rem] absolute inset-0 bg-transparent rounded-2xl p-2"
       >
         <div className="absolute inset-0 bg-transparent rounded-lg" />
-        <div className="absolute inset-0 w-full h-[98%]  z-20 flex flex-row m-1">
-          <SignupFormDemo />
-          <div className="w-[55%] h-[full] ml-[1.1rem] rounded-md bg-red-900"></div>
+        <div className="absolute inset-0 w-full h-[98%]  z-20 flex flex-row m-1 justify-center ">
+          <CascadingDropdowns />
         </div>
       </motion.div>
     </div>
