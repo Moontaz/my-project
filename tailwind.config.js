@@ -19,10 +19,7 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    // rest of the code
-    addVariablesForColors,
-  ],
+  plugins: [require("@tailwindcss/forms"), addVariablesForColors],
 };
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).

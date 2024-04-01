@@ -107,7 +107,7 @@ export const MacbookScroll = ({
           <div className="mx-auto w-[80%] h-full">
             <Keypad />
           </div>
-          <div className="mx-auto w-[10%] overflow-hidden  h-full">
+          <div className="mx-auto w-[10%] overflow-hidden  h-full ">
             <SpeakerGrid />
           </div>
         </div>
@@ -167,8 +167,8 @@ export const Lid = ({
         }}
         className="h-96 w-[32rem] absolute inset-0 bg-transparent rounded-2xl p-2"
       >
-        <div className="absolute inset-0 bg-transparent rounded-lg" />
-        <div className="absolute inset-0 w-full h-[98%]  z-20 flex flex-row m-1 justify-center ">
+        <div className="absolute inset-0 bg-transparent rounded-lg " />
+        <div className="absolute inset-0 w-full h-[98%]  z-20 flex flex-row m-1 ">
           <CascadingDropdowns />
         </div>
       </motion.div>
