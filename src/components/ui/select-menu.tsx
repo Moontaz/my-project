@@ -16,6 +16,7 @@ const CascadingDropdowns: React.FC = () => {
   const [selectedOption2, setSelectedOption2] = useState<string>("");
   const [selectedOption3, setSelectedOption3] = useState<string>("");
   const [responseData, setResponseData] = useState<any>(null); // State to store response data
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const yearmonth: Option[] = [
     { id: 2, name: "Tahun" },
@@ -77,35 +78,49 @@ const CascadingDropdowns: React.FC = () => {
     setSelectedOption3(value);
   };
 
+  var data = {
+    inputText: "30",
+    yearmonth: "year",
+    selectedOption1: "laki-laki",
+  };
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      accept: "*/*",
+    },
+  };
+  var url = "https://group4-prplh.000webhostapp.com/public/home/find";
   // Handler for form submission
-  const handleSubmit = async (event: FormEvent) => {
-    // event.preventDefault();
-    if (selectedOption1 === "Perempuan" && !selectedOption2) {
-      alert("Please select and option for dropdown 2 before submitting.");
-      return;
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
     try {
+      const formData = new URLSearchParams();
+      formData.append("inputText", textInputValue);
+      formData.append("yearmonth", JSON.stringify(yearmonth));
+      formData.append("selectedOption1", selectedOption1);
+      formData.append("selectedOption2", selectedOption2);
+      formData.append("selectedOption3", selectedOption3);
+
       const response = await axios.post(
         "https://group4-prplh.000webhostapp.com/public/home/find",
+        formData,
         {
-          inputText: textInputValue,
-          yearmonth,
-          selectedOption1,
-          selectedOption2,
-          selectedOption3,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         }
       );
-      console.log("Response:", response.data);
-      // Handle response data
 
+      console.log("Data submitted successfully:", response.data);
       setResponseData(response.data);
+      // Reset form fields
       setTextInputValue("");
       setSelectedOption1("");
       setSelectedOption2("");
       setSelectedOption3("");
     } catch (error) {
-      console.error("Error:", error);
-      // Handle error
+      console.error("Error submitting data:", error);
     }
   };
 
@@ -162,7 +177,7 @@ const CascadingDropdowns: React.FC = () => {
                         <div className="relative  ">
                           <Listbox.Button className="relative w-[6.2vw] cursor-default  rounded-r-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm focus:outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             <span className="ml-3 block truncate text-[0.6rem]">
-                              {selectedYearmonth || "Year"}
+                              {selectedYearmonth || "Tahun"}
                             </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                               <ChevronUpDownIcon
@@ -519,13 +534,37 @@ const CascadingDropdowns: React.FC = () => {
       <div className="w-[1px] h-[70%] rounded-md mx-3 bg-black"></div>
       <div className="h-full w-[65%] bg-red-600">
         <h1>Ini hasilnya</h1>
-        {responseData && (
+        {responseData === null ? (
+          <div>Waiting for response...</div>
+        ) : (
           <div>
             <h2>Response Data:</h2>
-            <p>Energi: {responseData.data.tabel1.energi}</p>
+            <h3>Tabel 1:</h3>
+            <ul>
+              {Object.entries(responseData.data.tabel1).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value as String}
+                </li>
+              ))}
+            </ul>
+            <h3>Tabel 2:</h3>
+            <ul>
+              {Object.entries(responseData.data.tabel2).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value as String}
+                </li>
+              ))}
+            </ul>
+            <h3>Tabel 3:</h3>
+            <ul>
+              {Object.entries(responseData.data.tabel3).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value as String}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-
         {/* {responseData && (
           <div>
             <h2>Response Data:</h2>
