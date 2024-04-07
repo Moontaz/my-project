@@ -20,6 +20,7 @@ const CascadingDropdowns: React.FC = () => {
   const [selectedOption1, setSelectedOption1] = useState<string>("");
   const [selectedOption2, setSelectedOption2] = useState<string>("");
   const [selectedOption3, setSelectedOption3] = useState<string>("");
+  const [responseData, setResponseData] = useState<any>(null); // State to store response data
 
   const yearmonth: Option[] = [
     { id: 2, name: "Tahun" },
@@ -98,18 +99,19 @@ const CascadingDropdowns: React.FC = () => {
       })
       .then((response) => {
         console.log("Data submitted successfully:", response.data);
-        const gizi1 = response.data[0];
-        const gizi2 = response.data[1];
-        const gizi3 = response.data[2];
+        setResponseData(response.data);
+        // const gizi1 = response.data[0];
+        // const gizi2 = response.data[1];
+        // const gizi3 = response.data[2];
 
-        var energi = gizi1[1];
-        var protein = gizi1[2];
-        var total_lemak = gizi1[3];
-        var omega3 = gizi1[4];
-        var omega6 = gizi1[5];
-        var karbohidrat = gizi1[6];
-        var serat = gizi1[7];
-        var air = gizi1[8];
+        // var energi = gizi1[1];
+        // var protein = gizi1[2];
+        // var total_lemak = gizi1[3];
+        // var omega3 = gizi1[4];
+        // var omega6 = gizi1[5];
+        // var karbohidrat = gizi1[6];
+        // var serat = gizi1[7];
+        // var air = gizi1[8];
 
         // for (var i = 0; i < gizi1.length; i++) {}
 
@@ -609,7 +611,16 @@ const CascadingDropdowns: React.FC = () => {
         </form>
       </div>
       <div className="w-[2px] h-[90%] rounded-md mx-3 bg-black"></div>
-      <div className=""></div>
+      <div className="">
+        {/* Display response data */}
+        {responseData && (
+          <div>
+            <h2>Response Data:</h2>
+            <pre>{JSON.stringify(responseData, null, 2)}</pre>
+            {/* You can access specific fields from responseData and display them as needed */}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
