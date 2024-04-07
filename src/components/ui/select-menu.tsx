@@ -22,19 +22,19 @@ const CascadingDropdowns: React.FC = () => {
   const [selectedOption3, setSelectedOption3] = useState<string>("");
 
   const yearmonth: Option[] = [
-    { id: 2, name: "Year" },
-    { id: 3, name: "Month" },
+    { id: 2, name: "Tahun" },
+    { id: 3, name: "Bulan" },
   ];
   // Options for dropdown 1
   const options1: Option[] = [
-    { id: 1, name: "Male" },
-    { id: 2, name: "Female" },
+    { id: 1, name: "Laki-laki" },
+    { id: 2, name: "Perempuan" },
   ];
 
   // Options for dropdown 2 based on selected option in dropdown 1
   const options2: { [key: string]: Option[] } = {
-    Male: [{ id: 1, name: "Suboption 1" }],
-    Female: [
+    "Laki-laki": [{ id: 1, name: "Suboption 1" }],
+    Perempuan: [
       { id: 2, name: "Hamil" },
       { id: 3, name: "Menyusui" },
       { id: 4, name: "Tidak Keduanya" },
@@ -49,8 +49,8 @@ const CascadingDropdowns: React.FC = () => {
       { id: 3, name: "Trimester III" },
     ],
     Menyusui: [
-      { id: 4, name: "Tahun Pertama" },
-      { id: 5, name: "Tahun Kedua" },
+      { id: 4, name: "Semester Pertama" },
+      { id: 5, name: "Semester Kedua" },
     ],
     // Add more options as needed
   };
@@ -83,8 +83,8 @@ const CascadingDropdowns: React.FC = () => {
 
   // Handler for form submission
   const handleSubmit = async () => {
-    if (selectedOption1 === "Female" && !selectedOption2) {
-      alert("Please select and option for dropdown 2 before sbumitting.");
+    if (selectedOption1 === "Perempuan" && !selectedOption2) {
+      alert("Please select and option for dropdown 2 before submitting.");
       return;
     }
     axios
@@ -97,7 +97,20 @@ const CascadingDropdowns: React.FC = () => {
       })
       .then((response) => {
         console.log("Data submitted successfully:", response.data);
-        const [gizi1, gizi2, gizi3] = response.data;
+        const gizi1 = response.data[0];
+        const gizi2 = response.data[1];
+        const gizi3 = response.data[2];
+
+        var energi = gizi1[1];
+        var protein = gizi1[2];
+        var total_lemak = gizi1[3];
+        var omega3 = gizi1[4];
+        var omega6 = gizi1[5];
+        var karbohidrat = gizi1[6];
+        var serat = gizi1[7];
+        var air = gizi1[8];
+
+        // for (var i = 0; i < gizi1.length; i++) {}
 
         setTextInputValue("");
         setSelectedOption1("");
@@ -397,7 +410,7 @@ const CascadingDropdowns: React.FC = () => {
                 <>
                   <div
                     className="relative mt-[1px] cols-5 "
-                    hidden={!selectedOption1 || selectedOption1 === "Male"}
+                    hidden={!selectedOption1 || selectedOption1 === "Laki-laki"}
                   >
                     <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
                       Condition
@@ -405,7 +418,7 @@ const CascadingDropdowns: React.FC = () => {
                   </div>
                   <div
                     className="relative "
-                    hidden={!selectedOption1 || selectedOption1 === "Male"}
+                    hidden={!selectedOption1 || selectedOption1 === "Laki-laki"}
                   >
                     <Listbox.Button className="relative cols-7 w-full cursor-default rounded-md bg-white  pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="ml-3 block truncate text-[0.6rem]">
@@ -578,13 +591,13 @@ const CascadingDropdowns: React.FC = () => {
             id="submitButton"
             hidden={
               !selectedOption1 ||
-              (selectedOption1 === "Female" &&
+              (selectedOption1 === "Perempuan" &&
                 !selectedOption2 &&
                 !selectedOption3) ||
-              (selectedOption1 === "Female" &&
+              (selectedOption1 === "Perempuan" &&
                 selectedOption2 === "Hamil" &&
                 !selectedOption3) ||
-              (selectedOption1 === "Female" &&
+              (selectedOption1 === "Perempuan" &&
                 selectedOption2 === "Menyusui" &&
                 !selectedOption3)
             }
