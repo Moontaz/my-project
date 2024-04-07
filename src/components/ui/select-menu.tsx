@@ -532,8 +532,8 @@ const CascadingDropdowns: React.FC = () => {
           </button>
         </form>
       </div>
-      <div className="w-[1px] h-[90%] rounded-md mx-3 bg-black"></div>
-      <div className="">
+      <div className="w-[1px] h-[70%] rounded-md mx-3 bg-black"></div>
+      <div className="h-full w-[65%] bg-black">
         {responseData && (
           <div>
             <h2>Response Data:</h2>
