@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, FormEvent } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Label } from "./label";
@@ -164,7 +164,7 @@ const CascadingDropdowns: React.FC = () => {
                   name="price"
                   id="price"
                   className="block w-full h-6 rounded-md  text-[0.6rem] border-0 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6"
-                  placeholder="fill me:)"
+                  placeholder="required"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center text-[0.6rem]">
                   <Listbox
