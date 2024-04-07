@@ -537,6 +537,13 @@ const CascadingDropdowns: React.FC = () => {
         {responseData && (
           <div>
             <h2>Response Data:</h2>
+            <p>Energi: {responseData.data.tabel1.energi}</p>
+          </div>
+        )}
+
+        {/* {responseData && (
+          <div>
+            <h2>Response Data:</h2>
             <h3>Tabel 1:</h3>
             <ul>
               {Object.entries(responseData.data.tabel1).map(([key, value]) => (
@@ -562,7 +569,7 @@ const CascadingDropdowns: React.FC = () => {
               ))}
             </ul>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
