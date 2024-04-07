@@ -82,7 +82,8 @@ const CascadingDropdowns: React.FC = () => {
   };
 
   // Handler for form submission
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     if (selectedOption1 === "Perempuan" && !selectedOption2) {
       alert("Please select and option for dropdown 2 before submitting.");
       return;
