@@ -252,84 +252,6 @@ const CascadingDropdowns: React.FC = () => {
                 </div>
               </div>
             </div>
-            {/* <Listbox value={selectedYearmonth} onChange={handleYearmonthChange}>
-              {({ open }) => (
-                <>
-                  <Listbox.Label className="block text-[0.6rem] font-medium leading-6 text-gray-900">
-                    Year/Month
-                  </Listbox.Label>
-                  <div className="relative  ">
-                    <Listbox.Button className="relative w-full flex flex-row cursor-default rounded-md bg-white   pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                      <span className="ml-3 block truncate text-[0.6rem]">
-                        {selectedYearmonth || "Year"}
-                      </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                        <ChevronUpDownIcon
-                          className="h-3 w-3 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </Listbox.Button>
-
-                    <Transition
-                      show={open}
-                      as={Fragment}
-                      leave="transition ease-in duration-100"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
-                    >
-                      <Listbox.Options className="absolute z-10  max-h-20 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {yearmonth.map((person) => (
-                          <Listbox.Option
-                            key={person.id}
-                            className={({ active }) =>
-                              classNames(
-                                active
-                                  ? "bg-indigo-600 text-white text-[0.6rem]"
-                                  : "text-gray-900",
-                                "relative cursor-default select-none  pl-3 pr-9"
-                              )
-                            }
-                            value={person.name}
-                          >
-                            {({ selected, active }) => (
-                              <>
-                                <div className="flex items-center  text-[0.6rem]">
-                                  <span
-                                    className={classNames(
-                                      selected
-                                        ? "font-semibold"
-                                        : "font-normal",
-                                      "ml-3 block truncate"
-                                    )}
-                                  >
-                                    {person.name}
-                                  </span>
-                                </div>
-
-                                {selected ? (
-                                  <span
-                                    className={classNames(
-                                      active ? "text-white" : "text-indigo-600",
-                                      "absolute inset-y-0 right-0 flex items-center pr-4"
-                                    )}
-                                  >
-                                    <CheckIcon
-                                      className="h-3 w-3"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </Transition>
-                  </div>
-                </>
-              )}
-            </Listbox> */}
             <Listbox value={selectedOption1} onChange={handleDropdown1Change}>
               {({ open }) => (
                 <>
@@ -610,14 +532,35 @@ const CascadingDropdowns: React.FC = () => {
           </button>
         </form>
       </div>
-      <div className="w-[2px] h-[90%] rounded-md mx-3 bg-black"></div>
+      <div className="w-[1px] h-[90%] rounded-md mx-3 bg-black"></div>
       <div className="">
-        {/* Display response data */}
         {responseData && (
           <div>
             <h2>Response Data:</h2>
-            <pre>{JSON.stringify(responseData, null, 2)}</pre>
-            {/* You can access specific fields from responseData and display them as needed */}
+            <h3>Tabel 1:</h3>
+            <ul>
+              {Object.entries(responseData.data.tabel1).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              ))}
+            </ul>
+            <h3>Tabel 2:</h3>
+            <ul>
+              {Object.entries(responseData.data.tabel2).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              ))}
+            </ul>
+            <h3>Tabel 3:</h3>
+            <ul>
+              {Object.entries(responseData.data.tabel3).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
