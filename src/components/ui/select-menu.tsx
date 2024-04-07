@@ -15,20 +15,17 @@ const CascadingDropdowns: React.FC = () => {
   const [selectedOption1, setSelectedOption1] = useState<string>("");
   const [selectedOption2, setSelectedOption2] = useState<string>("");
   const [selectedOption3, setSelectedOption3] = useState<string>("");
-  const [responseData, setResponseData] = useState<any>(null); // State to store response data
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [responseData, setResponseData] = useState<any>(null);
 
   const yearmonth: Option[] = [
     { id: 2, name: "Tahun" },
     { id: 3, name: "Bulan" },
   ];
-  // Options for dropdown 1
   const options1: Option[] = [
     { id: 1, name: "Laki-laki" },
     { id: 2, name: "Perempuan" },
   ];
 
-  // Options for dropdown 2 based on selected option in dropdown 1
   const options2: { [key: string]: Option[] } = {
     "Laki-laki": [{ id: 1, name: "Suboption 1" }],
     Perempuan: [
@@ -38,7 +35,6 @@ const CascadingDropdowns: React.FC = () => {
     ],
   };
 
-  // Options for dropdown 3 based on selected option in dropdown 2
   const options3: { [key: string]: Option[] } = {
     Hamil: [
       { id: 1, name: "Trimester I" },
@@ -49,79 +45,89 @@ const CascadingDropdowns: React.FC = () => {
       { id: 4, name: "Semester Pertama" },
       { id: 5, name: "Semester Kedua" },
     ],
-    // Add more options as needed
   };
 
-  // Handler for dropdown 1 change
+  const [formData, setFormData] = useState({
+    inputText: "",
+    yearmonth: "",
+    selectedOption1: "",
+    selectedOption2: "",
+    selectedOption3: "",
+  });
+
   const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTextInputValue(e.target.value);
+    setFormData({
+      ...formData,
+      inputText: e.target.value,
+    });
   };
-  // Handler for dropdown 1 change
+
   const handleYearmonthChange = (value: string) => {
     setSelectedYearmonth(value);
+    setFormData({
+      ...formData,
+      yearmonth: value,
+    });
   };
-  // Handler for dropdown 1 change
+
   const handleDropdown1Change = (value: string) => {
     setSelectedOption1(value);
-    setSelectedOption2(""); // Reset dropdown 2 value
-    setSelectedOption3(""); // Reset dropdown 3 value
+    setSelectedOption2("");
+    setSelectedOption3("");
+    setFormData({
+      ...formData,
+      selectedOption1: value,
+      selectedOption2: "",
+      selectedOption3: "",
+    });
   };
 
-  // Handler for dropdown 2 change
   const handleDropdown2Change = (value: string) => {
     setSelectedOption2(value);
-    setSelectedOption3(""); // Reset dropdown 3 value
+    setSelectedOption3("");
+    setFormData({
+      ...formData,
+      selectedOption2: value,
+      selectedOption3: "",
+    });
   };
 
-  // Handler for dropdown 3 change
   const handleDropdown3Change = (value: string) => {
     setSelectedOption3(value);
+    setFormData({
+      ...formData,
+      selectedOption3: value,
+    });
   };
 
-  var data = {
-    inputText: "30",
-    yearmonth: "year",
-    selectedOption1: "laki-laki",
-  };
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      accept: "*/*",
-    },
-  };
-  var url = "https://group4-prplh.000webhostapp.com/public/home/find";
-  // Handler for form submission
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent default form submission behavior
-
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      const formData = new URLSearchParams();
-      formData.append("inputText", textInputValue);
-      formData.append("yearmonth", JSON.stringify(yearmonth));
-      formData.append("selectedOption1", selectedOption1);
-      formData.append("selectedOption2", selectedOption2);
-      formData.append("selectedOption3", selectedOption3);
-
       const response = await axios.post(
         "https://group4-prplh.000webhostapp.com/public/home/find",
-        formData,
+        encodeFormData(formData),
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
         }
       );
-
-      console.log("Data submitted successfully:", response.data);
-      setResponseData(response.data);
-      // Reset form fields
-      setTextInputValue("");
-      setSelectedOption1("");
-      setSelectedOption2("");
-      setSelectedOption3("");
+      console.log("Response:", response.data);
+      // Handle response here
     } catch (error) {
-      console.error("Error submitting data:", error);
+      console.error("Error:", error);
+      // Handle error here
     }
+  };
+
+  // Function to encode form data as x-www-form-urlencoded
+  const encodeFormData = (data: any) => {
+    const encodedString = Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+      )
+      .join("&");
+    return encodedString;
   };
 
   function classNames(...classes: string[]) {
