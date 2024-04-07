@@ -541,7 +541,7 @@ const CascadingDropdowns: React.FC = () => {
             <ul>
               {Object.entries(responseData.data.tabel1).map(([key, value]) => (
                 <li key={key}>
-                  {key}: {value}
+                  {key}: {value as string}
                 </li>
               ))}
             </ul>
@@ -549,7 +549,7 @@ const CascadingDropdowns: React.FC = () => {
             <ul>
               {Object.entries(responseData.data.tabel2).map(([key, value]) => (
                 <li key={key}>
-                  {key}: {value}
+                  {key}: {value as string}
                 </li>
               ))}
             </ul>
@@ -557,7 +557,7 @@ const CascadingDropdowns: React.FC = () => {
             <ul>
               {Object.entries(responseData.data.tabel3).map(([key, value]) => (
                 <li key={key}>
-                  {key}: {value}
+                  {key}: {value as string}
                 </li>
               ))}
             </ul>
