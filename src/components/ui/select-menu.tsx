@@ -5,11 +5,6 @@ import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "../../utils/cn";
 import axios from "axios";
-
-interface Selection {
-  id: number;
-  name: string;
-}
 interface Option {
   id: number;
   name: string;
@@ -99,7 +94,7 @@ const CascadingDropdowns: React.FC = () => {
       })
       .then((response) => {
         console.log("Data submitted successfully:", response.data);
-        setResponseData(response.data);
+        setResponseData(response);
         // const gizi1 = response.data[0];
         // const gizi2 = response.data[1];
         // const gizi3 = response.data[2];
