@@ -84,40 +84,29 @@ const CascadingDropdowns: React.FC = () => {
       alert("Please select and option for dropdown 2 before submitting.");
       return;
     }
-    axios
-      .post("https://group4-prplh.000webhostapp.com/public/home/find", {
-        inputText: textInputValue,
-        yearmonth,
-        selectedOption1,
-        selectedOption2,
-        selectedOption3,
-      })
-      .then((response) => {
-        console.log("Data submitted successfully:", response.data);
-        setResponseData(response);
-        // const gizi1 = response.data[0];
-        // const gizi2 = response.data[1];
-        // const gizi3 = response.data[2];
+    try {
+      const response = await axios.post(
+        "https://group4-prplh.000webhostapp.com/public/home/find",
+        {
+          inputText: textInputValue,
+          yearmonth,
+          selectedOption1,
+          selectedOption2,
+          selectedOption3,
+        }
+      );
+      console.log("Response:", response.data);
+      // Handle response data
 
-        // var energi = gizi1[1];
-        // var protein = gizi1[2];
-        // var total_lemak = gizi1[3];
-        // var omega3 = gizi1[4];
-        // var omega6 = gizi1[5];
-        // var karbohidrat = gizi1[6];
-        // var serat = gizi1[7];
-        // var air = gizi1[8];
-
-        // for (var i = 0; i < gizi1.length; i++) {}
-
-        setTextInputValue("");
-        setSelectedOption1("");
-        setSelectedOption2("");
-        setSelectedOption3("");
-      })
-      .catch((error) => {
-        console.error("Error Submitting data:", error);
-      });
+      setResponseData(response.data);
+      setTextInputValue("");
+      setSelectedOption1("");
+      setSelectedOption2("");
+      setSelectedOption3("");
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
+    }
   };
 
   function classNames(...classes: string[]) {
